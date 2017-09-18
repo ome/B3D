@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include <cudaCompress/util.h>
+#include <B3D_cudaCompress/util.h>
 
 #include "HuffmanCPU.h"
 #include "HuffmanTableCPU.h"

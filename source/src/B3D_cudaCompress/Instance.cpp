@@ -1,6 +1,6 @@
 #include <cudaCompress/Instance.h>
 
-#include <cudaCompress/InstanceImpl.h>
+#include <B3D_cudaCompress/InstanceImpl.h>
 
 
 namespace cudaCompress {

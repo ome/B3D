@@ -4,7 +4,7 @@
 
 #include <cuda_runtime_api.h>
 
-#include <cudaCompress/util.h>
+#include <B3D_cudaCompress/util.h>
 #include <cudaCompress/cudaUtil.h>
 
 #include "reduce_globals.h"

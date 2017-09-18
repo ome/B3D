@@ -5,14 +5,14 @@
 #include <cuda_runtime.h>
 
 #include <cudaCompress/cudaUtil.h>
-#include <cudaCompress/util.h>
+#include <B3D_cudaCompress/util.h>
 
-#include <cudaCompress/InstanceImpl.h>
-#include <cudaCompress/Histogram.h>
-#include <cudaCompress/Huffman.h>
-#include <cudaCompress/HuffmanTable.h>
-#include <cudaCompress/PackInc.h>
-#include <cudaCompress/RunLength.h>
+#include <B3D_cudaCompress/InstanceImpl.h>
+#include <B3D_cudaCompress/Histogram.h>
+#include <B3D_cudaCompress/Huffman.h>
+#include <B3D_cudaCompress/HuffmanTable.h>
+#include <B3D_cudaCompress/PackInc.h>
+#include <B3D_cudaCompress/RunLength.h>
 
 
 namespace cudaCompress {

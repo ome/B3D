@@ -5,7 +5,7 @@
 #include <cudaCompress/global.h>
 
 #include <cudaCompress/EncodeCommon.h>
-#include <cudaCompress/util.h>
+#include <B3D_cudaCompress/util.h>
 
 
 namespace cudaCompress {

@@ -3,8 +3,8 @@
 #include <cassert>
 #include <queue>
 
-#include <cudaCompress/HuffmanDesign.h>
-#include <cudaCompress/util.h>
+#include <B3D_cudaCompress/HuffmanDesign.h>
+#include <B3D_cudaCompress/util.h>
 
 
 namespace cudaCompress {
