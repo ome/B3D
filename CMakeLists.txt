@@ -1,25 +1,32 @@
 cmake_minimum_required(VERSION 3.2)
-find_package(CUDA QUIET REQUIRED)
-#project(b3d LANGUAGES CXX CUDA)
-#INCLUDE_DIRECTORIES(/usr/local/cuda/include)
- 
-#cuda_add_executable(
-#    hellocuda
-#    source/src/B3D_cudaCompress/
-#    src/hellocuda.cu)
-
 set (CMAKE_CXX_STANDARD 11)
+
+find_package(CUDA QUIET REQUIRED)
+
+## add_definitions(-D_DEBUG)
+## This is broken with:
+## error: ‘__debugbreak’ was not declared in this scope
 add_definitions(-D_FORCE_INLINES)
-LIST(APPEND CMAKE_CXX_FLAGS "-std=c++11") # -O3 -ffast-math -Wall")
+add_definitions(-DHDF5_PLUGIN_EXPORTS)
+add_definitions(-DH5Z_CUDACOMPRESS_DEBUG)
+list(APPEND CMAKE_CXX_FLAGS "-fopenmp -fPIC -std=c++11") # -O3 -ffast-math -Wall")
 
-#set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS} \"-D_FORCE_INLINES\" ")
-
+        ## ${HDF5_INCLUDE_DIR}
 include_directories(
-	/usr/local/cuda/include
-	source/include
-	source/src)
+	/usr/local/cuda/include/
+        ${CMAKE_CURRENT_SOURCE_DIR}/../HDF5/hdf5-1.8.19/src/
+	${CMAKE_CURRENT_SOURCE_DIR}/source/include/
+	${CMAKE_CURRENT_SOURCE_DIR}/source/src/
+        source/src/B3D_HDF5_plugin/
+)
 
-add_library(b3d STATIC
+link_directories(
+	${CMAKE_CURRENT_SOURCE_DIR}/
+	../HDF5/build/
+        /usr/local/cuda/lib64/
+)
+
+add_library(b3d SHARED
 	source/src/B3D_cudaCompress/B3D/B3DcompressFunctions.cpp
 	source/src/B3D_cudaCompress/BitStreamGPU.cuh
 	source/src/B3D_cudaCompress/CPU/ArithmeticCPU.cpp
@@ -106,3 +113,28 @@ add_library(b3d STATIC
 	source/src/B3D_cudaCompress/util/QuantizeKernels.cui
 	source/src/B3D_cudaCompress/util/YCoCg.cu
 )
+
+add_library(b3dh5 SHARED
+	source/src/B3D_HDF5_plugin/GPUResources.cpp
+	source/src/B3D_HDF5_plugin/GPUResources.h
+	source/src/B3D_HDF5_plugin/HDF5_plugin.cpp
+	source/src/B3D_HDF5_plugin/HDF5_plugin.h
+	source/src/B3D_HDF5_plugin/cudaCompressFunctions.cpp
+	source/src/B3D_HDF5_plugin/cudaCompressFunctions.h
+	source/src/B3D_HDF5_plugin/cudaUtil.h
+	source/src/B3D_HDF5_plugin/global.h
+)
+
+add_executable(example
+	source/src/examples/cudaUtil.h
+	source/src/examples/direct_example+benchmark.cpp
+	source/src/examples/global.h
+	source/src/examples/tools/entropy.h
+	source/src/examples/tools/imgtools.h
+	source/src/examples/tools/rawfile.cpp
+	source/src/examples/tools/rawfile.h
+	source/src/examples/tthread/tinythread.cpp
+	source/src/examples/tthread/tinythread.h
+)
+
+target_link_libraries(example -lpthread -lhdf5 ${CUDA_LIBRARIES} -lb3d -lb3dh5)
