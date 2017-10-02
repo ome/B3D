@@ -11,16 +11,17 @@ os:
 
 sudo: false
 
+addons:
+  apt:
+    sources: &apt_sources
+
+    packages: &apt_packages
+      - nvidia-cuda-toolkit
+
 matrix:
   include:
     - env: CUDA=yes
       python: "3.6"
-      addons:
-        apt:
-          packages:
-            - nvidia-common
-            - nvidia-cuda-toolkit
-            - nvidia-cuda-dev
   exclude:
     - os: linux
 
