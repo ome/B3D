@@ -10,10 +10,10 @@
 
 #include <cudaCompress/util/CudaTimer.h>
 
-#include <cudaCompress/HuffmanTable.h>
+#include <B3D_cudaCompress/HuffmanTable.h>
 #include <cudaCompress/Timing.h>
 
-#include <cudaCompress/profiler/profiler.hpp>
+#include <B3D_cudaCompress/profiler/profiler.hpp>
 
 
 namespace cudaCompress

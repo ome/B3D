@@ -1,8 +1,9 @@
 #include "YCoCgCPU.h"
 
+#include <cstring>
 #include <memory>
 
-#include <cudaCompress/util.h>
+#include <B3D_cudaCompress/util.h>
 
 
 namespace cudaCompress {

@@ -1,10 +1,10 @@
 #include <cudaCompress/CPU/QuantizeCPU.h>
 
-#include <cudaCompress/tools/Operator.h>
-#include <cudaCompress/tools/Functor.h>
+#include <B3D_cudaCompress/tools/Operator.h>
+#include <B3D_cudaCompress/tools/Functor.h>
 
 #include <cudaCompress/cudaUtil.h>
-#include <cudaCompress/InstanceImpl.h>
+#include <B3D_cudaCompress/InstanceImpl.h>
 
 
 inline int getNegativeSign(short val)

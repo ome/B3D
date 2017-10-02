@@ -15,7 +15,7 @@
 
 #include <cudaCompress/BitStream.h>
 #include <cudaCompress/EncodeCommon.h>
-#include <cudaCompress/util.h>
+#include <B3D_cudaCompress/util.h>
 #include <cudaCompress/util/DWT.h>
 #include <cudaCompress/util/Quantize.h>
 #include <cudaCompress/util/YCoCg.h>
@@ -176,7 +176,7 @@ Stats runEncoderTestSuite(
     uint imageCount = 0;
     for(uint index = indexMin; index <= indexMax; index += indexStep) {
         char buf[1024];
-        sprintf_s(buf, filenamePattern.c_str(), index);
+        sprintf(buf, filenamePattern.c_str(), index);
         std::string filename(buf);
 
         uint sizeX = 0;

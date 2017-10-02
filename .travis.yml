@@ -1,0 +1,54 @@
+language: python
+
+env:
+  global:
+      - PATH=/usr/lib/ccache:$PATH
+
+cache: ccache
+
+os:
+  - linux
+
+sudo: false
+
+matrix:
+  include:
+    - env: CUDA=yes
+      python: "3.6"
+  exclude:
+    - os: linux
+
+
+# See astra-toolbox, pandegroup/openmm
+before_install:
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
+  - if [[ "$CUDA" == "true" ]]; then
+      wget "http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_${CUDA_VERSION}_amd64.deb";
+      sudo dpkg -i cuda-repo-ubuntu1404_${CUDA_VERSION}_amd64.deb;
+      sudo apt-get update -qq;
+      export CUDA_APT=${CUDA_VERSION%-*};
+      export CUDA_APT=${CUDA_APT/./-};
+      sudo apt-get install -y cuda-drivers cuda-core-${CUDA_APT} cuda-cudart-dev-${CUDA_APT} cuda-cufft-dev-${CUDA_APT};
+      sudo apt-get clean;
+      export CUDA_HOME=/usr/local/cuda-${CUDA_VERSION%%-*};
+      export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH};
+      export PATH=${CUDA_HOME}/bin:${PATH};
+      sudo apt-get install -y libgl1-mesa-dev;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update conda
+
+install:
+  - conda install python=$TRAVIS_PYTHON_VERSION six numpy scipy cython
+  - conda info -a
+  - mkdir build; cd build; cmake ..
+  - cd build; make -j 4
+
+script:
+  - python -c "import b3d"

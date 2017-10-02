@@ -1,8 +1,9 @@
 #include "GolombRiceCPU.h"
 
 #include <cmath>
+#include <climits>
 
-#include <cudaCompress/util.h>
+#include <B3D_cudaCompress/util.h>
 
 
 namespace cudaCompress {
